@@ -3,9 +3,7 @@ package com.eximias.ecommerce.controller;
 import com.eximias.ecommerce.dto.ProductDTO;
 import com.eximias.ecommerce.service.ProductService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,9 +12,21 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
     private final ProductService productService;
-
     @GetMapping
     public List<ProductDTO> getAll(){
         return productService.getAllProduct();
     }
+    @PostMapping
+    public int save(@RequestBody ProductDTO productDTO){
+        return productService.create(productDTO);
+    }
+    @DeleteMapping(path = "/{id}")
+    public boolean delete(@PathVariable(name = "id") int id){
+        return productService.delete(id);
+    }
+    @PutMapping(path="/{id}")
+    public ProductDTO update(@PathVariable(name= "id") int id, @RequestBody ProductDTO productDTO){
+        return productService.update(id, productDTO);
+    }
+
 }

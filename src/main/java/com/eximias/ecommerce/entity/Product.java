@@ -1,12 +1,15 @@
 package com.eximias.ecommerce.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
 @Table
+@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,4 +19,7 @@ public class Product {
     private String origin;
     private int price;
     private String description;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderItems> orderItemsList;
 }
