@@ -2,6 +2,7 @@ package com.eximias.ecommerce.service;
 
 import com.eximias.ecommerce.dto.CustomerDTO;
 import com.eximias.ecommerce.entity.Customer;
+import com.eximias.ecommerce.mapper.CustomerMapper;
 import com.eximias.ecommerce.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
-    public Customer toEntity(CustomerDTO dto){
-        Customer customer = new Customer();
-        customer.setName(dto.getName());
-        customer.setAddress(dto.getAddress());
-        customer.setDateOfBirth(dto.getDateOfBirth());
-        return customer;
-    }
+    private final CustomerMapper customerMapper;
 
     public Customer toEntity(Customer customer, CustomerDTO dto){
         customer.setName(dto.getName());
@@ -28,28 +23,25 @@ public class CustomerService {
         customer.setDateOfBirth(dto.getDateOfBirth());
         return customer;
     }
-    public CustomerDTO toDto(Customer customer){
-        CustomerDTO dto = new CustomerDTO();
-        dto.setId(customer.getId());
-        dto.setName(customer.getName());
-        dto.setAddress(customer.getAddress());
-        dto.setDateOfBirth(customer.getDateOfBirth());
-        return dto;
-    }
+
     public List<CustomerDTO> toDto(List<Customer> customers){
-        return customers.stream().map(this::toDto).collect(Collectors.toList());
+        return customers.stream().map(customerMapper::toDto).collect(Collectors.toList());
     }
 
     public int create(CustomerDTO dto){
-        return customerRepository.save(toEntity(dto)).getId();
+        return customerRepository.save(customerMapper.toEntity(dto)).getId();
     }
 
     public List<CustomerDTO> getAllCustomer(){
         return toDto(customerRepository.findAll());
     }
-    public Optional<Customer> findCustomerById(int id) {
-        return Optional.of(customerRepository.findById(id)).
-                orElseThrow(() -> new RuntimeException("Not found this customer"));
+
+    public CustomerDTO findCustomerById(int id) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if(customerOptional.isPresent()) {
+            return customerMapper.toDto(customerOptional.get());
+        }
+        throw new RuntimeException("Not found this customer");
     }
 
     public boolean deleteById (int id){
@@ -61,10 +53,10 @@ public class CustomerService {
     }
 
     public CustomerDTO update(int id, CustomerDTO dto){
-        return findCustomerById(id)
+        return customerRepository.findById(id)
                 .map(entity -> toEntity(entity, dto))
                 .map(customerRepository::save)
-                .map(this::toDto)
+                .map(customerMapper::toDto)
                 .get();
     }
 
