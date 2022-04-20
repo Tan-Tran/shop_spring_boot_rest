@@ -21,10 +21,12 @@ public class OrdersService {
     private CustomerService customerService;
     private ProductService productService;
     public Orders toEntity(Orders orders, OrdersDTO dto){
+        dto.getOrderItemsList().stream().forEach(orderItems -> orderItems.setOrders(orders));
         orders.setCustomer(customerMapper.toEntity(dto.getCustomerDTO()));
         orders.setDelivery(dto.getDelivery());
         orders.setCreateAt(dto.getCreateAt());
-        orders.setOrderItemsList(dto.getOrderItemsList());
+        orders.getOrderItemsList().clear();
+        orders.getOrderItemsList().addAll(dto.getOrderItemsList());
         return orders;
     }
     public int create(OrdersDTO dto){

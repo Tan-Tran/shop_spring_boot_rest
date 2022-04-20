@@ -26,7 +26,7 @@ public class Orders {
     @ToString.Exclude
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "orders_id")
     private List<OrderItems> orderItemsList;
 
