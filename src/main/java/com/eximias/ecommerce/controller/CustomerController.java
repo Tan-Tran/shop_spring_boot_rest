@@ -1,11 +1,13 @@
 package com.eximias.ecommerce.controller;
 
 import com.eximias.ecommerce.dto.CustomerDTO;
+import com.eximias.ecommerce.entity.Customer;
 import com.eximias.ecommerce.service.CustomerService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class CustomerController {
         return customerService.getAllCustomer();
     }
     @GetMapping(path="/{id}")
-    public CustomerDTO findById(@PathVariable(name = "id") int id){
+    public Optional<Customer> findById(@PathVariable(name = "id") int id){
         return customerService.findCustomerById(id);
     }
     @DeleteMapping(path = "/{id}")

@@ -1,5 +1,6 @@
 package com.eximias.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,15 +19,12 @@ public class OrderItems {
 
     @ManyToOne
     @JoinColumn(name ="orders_id")
+    @JsonIgnore
     private Orders orders;
 
-    @ManyToOne
-    @JoinColumn(name="product_id")
-    private Product product;
+    private int productId;
 
     private Integer quantity;
-
-    private Integer total;
 
     private String description;
 

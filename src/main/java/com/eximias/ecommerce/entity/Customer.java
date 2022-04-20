@@ -19,8 +19,4 @@ public class Customer {
     private String address;
     private Date dateOfBirth;
     private String phone;
-
-    @OneToMany(mappedBy = "customer")
-    List<Orders> ordersList;
-
 }
