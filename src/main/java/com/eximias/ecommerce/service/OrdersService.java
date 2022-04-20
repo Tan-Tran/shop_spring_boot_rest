@@ -2,7 +2,6 @@ package com.eximias.ecommerce.service;
 
 import com.eximias.ecommerce.dto.CustomerDTO;
 import com.eximias.ecommerce.dto.OrdersDTO;
-import com.eximias.ecommerce.entity.Customer;
 import com.eximias.ecommerce.entity.OrderItems;
 import com.eximias.ecommerce.mapper.OrdersMapper;
 import com.eximias.ecommerce.repository.OrdersRepository;
