@@ -19,7 +19,4 @@ public class Product {
     private String origin;
     private int price;
     private String description;
-
-    @OneToMany(mappedBy = "product")
-    private List<OrderItems> orderItemsList;
 }

@@ -31,12 +31,9 @@ public class CustomerService {
     public List<CustomerDTO> getAllCustomer(){
         return toDto(customerRepository.findAll());
     }
-    public CustomerDTO findCustomerById(int id) {
-        Optional<Customer> customerOptional = customerRepository.findById(id);
-        if(customerOptional.isPresent()) {
-            return customerMapper.toDto(customerOptional.get());
-        }
-        throw new RuntimeException("Not found this customer");
+    public Optional<Customer> findCustomerById(int id) {
+        return Optional.of(customerRepository.findById(id))
+                .orElseThrow(() -> new RuntimeException("Not found this product"));
     }
     public boolean deleteById (int id){
         if(customerRepository.findById(id).isPresent()){

@@ -1,8 +1,10 @@
 package com.eximias.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -20,16 +22,20 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+//    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name="customer_id")
+    @JsonIgnore
     private Customer customer;
 
-    @OneToMany(mappedBy = "orders")
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "orders_id")
     private List<OrderItems> orderItemsList;
 
     private String delivery;
 
-    @CreatedDate
-    private Date createAt;
+//    @CreatedDate
+//    private Date createAt;
 
 }

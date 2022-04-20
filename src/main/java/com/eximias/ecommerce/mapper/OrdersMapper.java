@@ -11,5 +11,7 @@ public interface OrdersMapper {
     OrdersMapper INSTANCE = Mappers.getMapper(OrdersMapper.class);
     @Mapping(source = "orders.customer", target = "customerDTO")
     OrdersDTO toDTO(Orders orders);
+
+    @Mapping(source = "ordersDTO.customerDTO", target = "customer")
     Orders toEntity(OrdersDTO ordersDTO);
 }
