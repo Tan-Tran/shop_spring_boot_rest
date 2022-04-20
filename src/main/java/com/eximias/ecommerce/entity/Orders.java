@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -24,16 +23,15 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name="customer_id")
-    @JsonIgnore
+    @ToString.Exclude
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "orders_id")
     private List<OrderItems> orderItemsList;
 
     private String delivery;
 
-    @CreatedDate
     private Date createAt;
 
 }
