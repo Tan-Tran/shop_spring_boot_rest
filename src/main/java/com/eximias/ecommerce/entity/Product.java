@@ -19,4 +19,7 @@ public class Product {
     private String origin;
     private int price;
     private String description;
+
+    @Column(columnDefinition = "boolean default true")
+    private boolean display = true;
 }

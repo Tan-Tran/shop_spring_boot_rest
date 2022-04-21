@@ -22,6 +22,7 @@ public class ProductService {
         product.setDescription(productDTO.getDescription());
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
+        product.setDisplay(productDTO.isDisplay());
         return product;
     }
 

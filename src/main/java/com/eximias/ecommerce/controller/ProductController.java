@@ -26,6 +26,7 @@ public class ProductController {
     }
     @PutMapping(path="/{id}")
     public ProductDTO update(@PathVariable(name= "id") int id, @RequestBody ProductDTO productDTO){
+        System.out.println(productDTO);
         return productService.update(id, productDTO);
     }
 

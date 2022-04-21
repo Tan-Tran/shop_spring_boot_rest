@@ -10,4 +10,5 @@ public class ProductDTO {
     private String origin;
     private int price;
     private String description;
+    private boolean display;
 }
